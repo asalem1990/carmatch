@@ -1,3 +1,8 @@
+$green  : #3D9970;
+$red    : #FF4136;
+$orange : #FF851B;
+$grey   : #DDDDDD;
+
 .header_container {
   position: fixed;
   z-index: 999;
@@ -6,8 +11,8 @@
   right: 0px;
   padding: 20px;
   height: 59px;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
+  background: white;
+  border-bottom: 1px solid $grey;
   min-width: 768px;
   .header_title_container {
     clear: both;
@@ -22,10 +27,10 @@
       line-height: 1.6em;
       button {
         padding: 8px 12px;
-        border: 1px solid #ddd;
+        border: 1px solid $grey;
         border-radius: 4px;
-        background: #eeefef;
-        color: #666;
+        background: lighten($grey, 10);
+        color: lighten(black, 30);
         cursor: pointer;
       }
     }
@@ -54,12 +59,12 @@ table#calendarView {
     padding: 0px 0px;
     width: 12.5%;
     min-width: 12.5%;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid $grey;
     height: 120px;
     text-align: center;
     vertical-align: top;
     &:nth-child(2), &:last-child {
-      background: #eeefef;
+      background: lighten($grey, 10);
     }
   }
   .slotTitle {
@@ -112,31 +117,31 @@ ul.appointments_holder {
       word-break: break-all;
     }
     .scheduled {
-      color: #FF4136;
-      border: 1px solid #FF4136;
+      color: $red;
+      border: 1px solid $red;
       left: 33.33%;
       &:HOVER, &:ACTIVE {
-        border: 1px solid darken(#FF4136, 20);
-        color: darken(#FF4136, 20);
+        border: 1px solid darken($red, 20);
+        color: darken($red, 20);
       }
     }
     .reserved {
-      color: #FF851B;
-      border: 1px solid #FF851B;
+      color: $orange;
+      border: 1px solid $orange;
       z-index: 2;
       left: 66.66%;
       &:HOVER, &:ACTIVE {
-        border: 1px solid darken(#FF851B, 20);
-        color: darken(#FF851B, 20);
+        border: 1px solid darken($orange, 20);
+        color: darken($orange, 20);
       }
     }
     .available {
-      color: #3D9970;
-      border: 1px solid #3D9970;
+      color: #green;
+      border: 1px solid $green;
       z-index: 3;
       &:HOVER, &:ACTIVE {
-        border: 1px solid darken(#3D9970, 20);
-        color: darken(#3D9970, 20);
+        border: 1px solid darken($green, 20);
+        color: darken($green, 20);
       }
     }
   }
@@ -167,8 +172,7 @@ ul.appointments_holder {
     right: 0;
     top: 20px;
     padding: 20px;
-    background: #fff;
-    border: 1px solid #aaa;
+    background: white;
     border-radius: 4px;
     label {
       display: block;
@@ -190,7 +194,7 @@ ul.appointments_holder {
       }
       input {
         width: 75%;
-        border: 1px solid #ddd;
+        border: 1px solid $grey;
         box-shadow: none !important;
         outline: none !important;
         box-sizing: border-box;
@@ -215,15 +219,15 @@ ul.appointments_holder {
           margin-left: 25%;
         }
         &.submitBTN {
-          border: 1px solid darken(#3D9970, 20);
-          color: darken(#3D9970, 20);
+          border: 1px solid darken($green, 20);
+          color: darken($green, 20);
           &[disabled] {
             opacity: 0.6;
           }
         }
         &.cancelBTN {
-          border: 1px solid darken(#FF4136, 20);
-          color: darken(#FF4136, 20);
+          border: 1px solid darken($red, 20);
+          color: darken($red, 20);
         }
       }
     }
@@ -231,7 +235,7 @@ ul.appointments_holder {
       display: inline-block;
       width: 26px;
       height: 26px;
-      color: #ed1c24;
+      color: darken($red, 20);
       line-height: 26px;
       border-radius: 100%;
       font-size: 22px;
