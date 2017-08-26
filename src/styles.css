@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+body {
+  margin: 0px;
+  margin-top: 100px;
+  padding: 0px 20px;
+  font-family: 'Roboto', sans-serif;
+  overflow-x: hidden;
+
+}
+@media screen and (max-width: 808px) {
+  body {
+    zoom: 0.8;
+  }
+}
+
+@media screen and (max-width: 638px) {
+  body {
+    zoom: 0.6;
+  }
+}
+@media screen and (max-width: 484px) {
+  body {
+    zoom: 0.4;
+  }
+}
+
+* {
+  outline: none !important;
+}

@@ -118,6 +118,11 @@ export class AppComponent {
     this.firstDayOfTheWeek = new Date(new Date(date).setDate(new Date(date).getDate() - new Date(date).getDay())).toUTCString();
     this.daysInWeek();
   }
+  showCurrentWeek () {
+    let date = new Date();
+    this.firstDayOfTheWeek = new Date(new Date(date).setDate(new Date(date).getDate() - new Date(date).getDay())).toUTCString();
+    this.daysInWeek();
+  }
   daysInWeek () {
     this.weekDays = [];
     for (let day = new Date(this.firstDayOfTheWeek).getDate(); day < (new Date(this.firstDayOfTheWeek).getDate() + 7) ; day++) {

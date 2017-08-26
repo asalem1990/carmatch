@@ -1,19 +1,40 @@
+<div class="header_container">
+  <div class="header_title_container">
+    <span class="header_title date">
+      {{this.weekDays[0] | date: 'MMMM yyyy' }}
+    </span>
+    <span class="navigation_buttons">
+      <button type="button" name="nextWeekBTN" class="navigation_btn previous_week" (click)="showPrevWeek()">&#10094;</button>
+      <button type="button" name="currentWeekBTN" class="navigation_btn current_week" (click)="showCurrentWeek()">This Week</button>
+      <button type="button" name="nextWeekBTN" class="navigation_btn next_week" (click)="showNextWeek()">&#10095;</button>
+    </span>
+  </div>
+  <div class="calendar_table_header">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th *ngFor="let day of this.weekDays">
+            {{day | date: 'EE, dd' }}
+          </th>
+        <tr>
+      </thead>
+    </table>
+  </div>
+</div>
 
-<button type="button" name="nextWeekBTN" (click)="showNextWeek()">Next</button>
-<button type="button" name="nextWeekBTN" (click)="showPrevWeek()">Prev</button>
+
+
+
+<!-- <button type="button" name="nextWeekBTN" class="navigation_btn next_week" (click)="showNextWeek()"></button>
+<button type="button" name="nextWeekBTN" class="navigation_btn previous_week" (click)="showPrevWeek()"></button> -->
 <table id="calendarView" border="0" cellpadding="0" cellmargin="0">
-  <thead>
-    <tr>
-      <th></th>
-      <th *ngFor="let day of this.weekDays">
-        {{day | date: 'EE, MMM dd, yyyy' }}
-      </th>
-    <tr>
-  </thead>
   <tbody *ngIf="this.appointments">
     <tr *ngFor="let hour of createRange(25)">
-      <td onload=""class="slotTitle">
-        {{(hour - 1) > 12 ? ( ((hour - 1) - 12) < 10 ? "0" + ((hour - 1) - 12) : (hour - 1) - 12 ) + ":00" + ( (hour - 1) == 24 ? "AM" : "PM" ) : ( (hour - 1 == 0) ? "12" : ((hour - 1) < 10 ? "0" + (hour - 1) : hour - 1) ) + ":00AM"}}
+      <td class="slotTitle">
+        <span class="slot_time">
+          {{(hour - 1) > 12 ? ( ((hour - 1) - 12) < 10 ? "0" + ((hour - 1) - 12) : (hour - 1) - 12 ) + ":00" + ( (hour - 1) == 24 ? "AM" : "PM" ) : ( (hour - 1 == 0) ? "12" : ((hour - 1) < 10 ? "0" + (hour - 1) : hour - 1) ) + ":00AM"}}
+        </span>
       </td>
       <td *ngFor="let day of this.weekDays">
         <ul *ngIf="getSlotAvailability(day | date:'yyyy-MM-dd', hour - 1) == true" class="appointments_holder">
@@ -21,36 +42,46 @@
           <li *ngFor="let app of getAppointments(day | date:'yyyy-MM-dd', hour - 1)"id="{{app.id}}">
             <span *ngIf="app.available == true && !reservedAppointment.includes(app.id) && !schedualedAppointment.includes(app.id)"
                   class="available"
-                  [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']" [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
-                  (click)="reserveAppointment(app.id)">Available
+                  [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+                  [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+                  [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
+                  (click)="reserveAppointment(app.id)">
+                  Available
             </span>
             <span *ngIf="app.available == false || schedualedAppointment.includes(app.id)"
                   class="scheduled"
-                  [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']" [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']">Scheduled</span>
+                  [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+                  [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+                  [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
+                  >Scheduled</span>
             <span *ngIf="app.available == true && reservedAppointment.includes(app.id)  && !schedualedAppointment.includes(app.id)"
                   class="reserved"
-                  [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']" [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']">Reserved
+                  [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+                  [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+                  [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
+                  >Reserved
                   </span>
 
             <div class="new_appointment_container" id="app.id" *ngIf="newAppointment == true && newAppointmentID == app.id  && !schedualedAppointment.includes(app.id)">
               <form [formGroup]="rForm" (ngSubmit)="makeAppointment(rForm.value)">
+                <span class="close_form" (click)="unreserveAppointment(app.id)">&#10005;</span>
                 <div class="form-container">
                   <div class="row columns">
                     <h1>New appointment</h1>
                     <p>{{app.startTime | date: 'short'}} - {{app.endTime | date: 'shortTime'}}</p>
 
                     <label>
-                      <span class="field_title">Name:</span>
+                      <span class="field_title">Name</span>
                       <input type="text" formControlName="name">
                     </label>
 
                     <label>
-                      <span class="field_title">Email:</span>
+                      <span class="field_title">Email</span>
                       <input type="text" formControlName="email">
                     </label>
 
                     <label>
-                      <span class="field_title">Phone Number:</span>
+                      <span class="field_title">Phone #</span>
                       <input type="text" formControlName="phoneNumber">
                     </label>
 
