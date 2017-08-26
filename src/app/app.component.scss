@@ -1,0 +1,169 @@
+table {
+      border-collapse: collapse;
+  tr {
+    td, th {
+      border: none;
+      padding: 0px 0px;
+      width: 180px;
+      min-width: 180px;
+      border-bottom: 1px solid #ddd;
+      height: 120px;
+      text-align: center;
+      vertical-align: top;
+      &:nth-child(odd) {
+        background: #eeefef;
+      }
+    }
+    th {
+      vertical-align: middle;
+      height: 60px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .slotTitle {
+      vertical-align: middle;
+      height: 60px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+  }
+}
+
+ul.appointments_holder {
+  padding: 0px;
+  margin: 0;
+  list-style: none;
+  display: inline-block;
+  word-break: keep-all;
+  word-wrap: unset;
+  text-overflow: clip;
+  text-size-adjust: 50%;
+  position: relative;
+  width: 180px;
+  height: 60px;
+  font-size: 12px;
+  li {
+    float: left;
+    margin: 0px;
+    display: inline-block;
+    word-break: keep-all;
+    word-wrap: unset;
+    text-overflow: clip;
+    >span {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      border: 1px solid darkgrey;
+      border-radius: 2px;
+      padding: 2px;
+      opacity: 0.6;
+      color: #fff;
+      display: inline-block;
+      text-align: center;
+      z-index: 1;
+      box-sizing: border-box;
+      width: 33.33%;
+      &:HOVER, &:ACTIVE {
+        opacity : 1;
+      }
+    }
+    .scheduled {
+      background: grey;
+      left: 33.33%;
+    }
+    .reserved {
+      background: red;
+      z-index: 2;
+      left: 66.66%;
+    }
+    .available {
+      background: green;
+      z-index: 3;
+    }
+  }
+}
+
+.new_appointment_container {
+  // display: none;
+  position: fixed;
+  background: #eee;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 500px;
+  height: 600px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  box-shadow: 0 0 10px;
+  &:after {
+    content: '';
+    position: fixed;
+    background: rgba(255, 255, 255, 0.7);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+  }
+
+  form {
+    padding: 20px;
+    label {
+      display: block;
+      text-align: left;
+      font-size: 16px;
+      display: inline-block;
+      width: 100%;
+      line-height: 36px;
+      margin: 10px 0px;
+      >span.field_title {
+        width: 25%;
+        display: inline-block;
+        text-align: right;
+        box-sizing: border-box;
+        float: left;
+        padding-right: 6px;
+      }
+      input {
+        width: 75%;
+        border: 1px solid #ddd;
+        box-shadow: none !important;
+        outline: none !important;
+        box-sizing: border-box;
+        display: inline-block;
+        float: left;
+        padding: 0px 10px;
+        line-height: 36px;
+        background: none !important;
+      }
+      button {
+        width: 100px;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        outline: none;
+        box-shadow: none;
+        color: white;
+        cursor: pointer;
+        &:first-child {
+          margin-left: 25%;
+        }
+        &.submitBTN {
+          background: green;
+          &[disabled] {
+            opacity: 0.4;
+          }
+        }
+        &.cancelBTN {
+          background: red;
+        }
+      }
+    }
+
+  }
+}

@@ -1,3 +1,75 @@
-<h1>
-  {{title}}
-</h1>
+
+<button type="button" name="nextWeekBTN" (click)="showNextWeek()">Next</button>
+<button type="button" name="nextWeekBTN" (click)="showPrevWeek()">Prev</button>
+<table id="calendarView" border="0" cellpadding="0" cellmargin="0">
+  <thead>
+    <tr>
+      <th></th>
+      <th *ngFor="let day of this.weekDays">
+        {{day | date: 'EE, MMM dd, yyyy' }}
+      </th>
+    <tr>
+  </thead>
+  <tbody *ngIf="this.appointments">
+    <tr *ngFor="let hour of createRange(25)">
+      <td onload=""class="slotTitle">
+        {{(hour - 1) > 12 ? ( ((hour - 1) - 12) < 10 ? "0" + ((hour - 1) - 12) : (hour - 1) - 12 ) + ":00" + ( (hour - 1) == 24 ? "AM" : "PM" ) : ( (hour - 1 == 0) ? "12" : ((hour - 1) < 10 ? "0" + (hour - 1) : hour - 1) ) + ":00AM"}}
+      </td>
+      <td *ngFor="let day of this.weekDays">
+        <ul *ngIf="getSlotAvailability(day | date:'yyyy-MM-dd', hour - 1) == true" class="appointments_holder">
+
+          <li *ngFor="let app of getAppointments(day | date:'yyyy-MM-dd', hour - 1)"id="{{app.id}}">
+            <span *ngIf="app.available == true && !reservedAppointment.includes(app.id) && !schedualedAppointment.includes(app.id)"
+                  class="available"
+                  [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']" [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
+                  (click)="reserveAppointment(app.id)">Available
+            </span>
+            <span *ngIf="app.available == false || schedualedAppointment.includes(app.id)"
+                  class="scheduled"
+                  [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']" [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']">Scheduled</span>
+            <span *ngIf="app.available == true && reservedAppointment.includes(app.id)  && !schedualedAppointment.includes(app.id)"
+                  class="reserved"
+                  [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']" [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']">Reserved
+                  </span>
+
+            <div class="new_appointment_container" id="app.id" *ngIf="newAppointment == true && newAppointmentID == app.id  && !schedualedAppointment.includes(app.id)">
+              <form [formGroup]="rForm" (ngSubmit)="makeAppointment(rForm.value)">
+                <div class="form-container">
+                  <div class="row columns">
+                    <h1>New appointment</h1>
+                    <p>{{app.startTime | date: 'short'}} - {{app.endTime | date: 'shortTime'}}</p>
+
+                    <label>
+                      <span class="field_title">Name:</span>
+                      <input type="text" formControlName="name">
+                    </label>
+
+                    <label>
+                      <span class="field_title">Email:</span>
+                      <input type="text" formControlName="email">
+                    </label>
+
+                    <label>
+                      <span class="field_title">Phone Number:</span>
+                      <input type="text" formControlName="phoneNumber">
+                    </label>
+
+                    <label>
+                      <button type="submit" class="btn expanded submitBTN" [disabled]="!rForm.valid">Submit</button>
+                      <button type="button" class="btn btn-cancel cancelBTN" (click)="unreserveAppointment(app.id)">Cancel</button>
+                    </label>
+
+
+                  </div>
+                </div>
+              </form>
+
+            </div>
+
+          </li>
+        </ul>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
