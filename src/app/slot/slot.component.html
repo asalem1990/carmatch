@@ -1,0 +1,61 @@
+<ul *ngIf="getSlotAvailability(day | date:'yyyy-MM-dd', hour - 1) == true" class="appointments_holder">
+  <li *ngFor="let app of getAppointments(day | date:'yyyy-MM-dd', hour - 1)"id="{{app.id}}">
+    <span *ngIf="app.available == true && !realtime.reservedAppointments.includes(app.id) && !realtime.schedualedAppointments.includes(app.id)"
+          class="available"
+          [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+          [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+          [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
+          (click)="realtime.reserveAppointment(app.id)">
+          Available
+    </span>
+    <span *ngIf="app.available == false || realtime.schedualedAppointments.includes(app.id)"
+          class="scheduled"
+          [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+          [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+          [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
+          >Scheduled</span>
+    <span *ngIf="app.available == true && realtime.reservedAppointments.includes(app.id)  && !realtime.schedualedAppointments.includes(app.id)"
+          class="reserved"
+          [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+          [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
+          [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
+          >Reserved
+          </span>
+
+    <div class="new_appointment_container" id="app.id" *ngIf="realtime.isAppointmentReseved == true && realtime.appointmentResevedID == app.id  && !realtime.schedualedAppointments.includes(app.id)">
+      <form [formGroup]="rForm" (ngSubmit)="schedualAppointment(rForm.value)">
+        <span class="close_form" (click)="realtime.unreserveAppointment(app.id)">&#10005;</span>
+        <div class="form-container">
+          <div class="row columns">
+            <h1>New appointment</h1>
+            <p>{{app.startTime | date: 'short'}} - {{app.endTime | date: 'shortTime'}}</p>
+
+            <label>
+              <span class="field_title">Name</span>
+              <input type="text" formControlName="name">
+            </label>
+
+            <label>
+              <span class="field_title">Email</span>
+              <input type="text" formControlName="email">
+            </label>
+
+            <label>
+              <span class="field_title">Phone #</span>
+              <input type="text" formControlName="phoneNumber">
+            </label>
+
+            <label>
+              <button type="submit" class="btn expanded submitBTN" [disabled]="!rForm.valid">Submit</button>
+              <button type="button" class="btn btn-cancel cancelBTN" (click)="realtime.unreserveAppointment(app.id)">Cancel</button>
+            </label>
+
+
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+  </li>
+</ul>

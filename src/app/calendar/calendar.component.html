@@ -1,0 +1,38 @@
+<div class="header_container">
+  <div class="header_title_container">
+    <span class="header_title date">
+      {{this.weekDays[0] | date: 'MMMM yyyy' }}
+    </span>
+    <span class="navigation_buttons">
+      <button type="button" name="nextWeekBTN" class="navigation_btn previous_week" (click)="showPrevWeek()">&#10094;</button>
+      <button type="button" name="currentWeekBTN" class="navigation_btn current_week" (click)="showCurrentWeek()">This Week</button>
+      <button type="button" name="nextWeekBTN" class="navigation_btn next_week" (click)="showNextWeek()">&#10095;</button>
+    </span>
+  </div>
+  <div class="calendar_table_header">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th *ngFor="let day of this.weekDays">
+            {{day | date: 'EE, dd' }}
+          </th>
+        <tr>
+      </thead>
+    </table>
+  </div>
+</div>
+<table id="calendarView" border="0" cellpadding="0" cellmargin="0">
+  <tbody *ngIf="slot.appointments">
+    <tr *ngFor="let hour of createRange(25)">
+      <td class="slotTitle">
+        <span class="slot_time">
+          {{(hour - 1) > 12 ? ( ((hour - 1) - 12) < 10 ? "0" + ((hour - 1) - 12) : (hour - 1) - 12 ) + ":00" + ( (hour - 1) == 24 ? "AM" : "PM" ) : ( (hour - 1 == 0) ? "12" : ((hour - 1) < 10 ? "0" + (hour - 1) : hour - 1) ) + ":00AM"}}
+        </span>
+      </td>
+      <td *ngFor="let day of this.weekDays">
+        <app-slot [day]=day [hour]=hour></app-slot>
+      </td>
+    </tr>
+  </tbody>
+</table>
