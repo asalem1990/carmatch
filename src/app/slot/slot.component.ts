@@ -17,7 +17,7 @@ export class SlotComponent implements OnInit {
   email:string = '';
   phoneNumber:string = '';
 
-  constructor(protected data: DataService, protected realtime: RealtimeService, public fb: FormBuilder) {
+  constructor(public data: DataService, public realtime: RealtimeService, public fb: FormBuilder) {
     // CREATING THE FORM OBJECT WHICH WILL BE USED TO DRAW EACH FORM IN THE calendar
     this.rForm = fb.group({
       'name' : [null,Validators.required],

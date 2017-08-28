@@ -15,7 +15,7 @@ export class CalendarComponent implements OnInit {
   weekDays = [];
 
 
-  constructor(public slot: SlotComponent, protected data: DataService) {
+  constructor(public slot: SlotComponent, public data: DataService) {
     // GET THE WEEK DAYS FOR BUILDING THE CALENDAT VIEW.
     this.getWeekDays();
   }
