@@ -8,20 +8,14 @@ body {
   overflow-x: hidden;
 
 }
-@media screen and (max-width: 808px) {
-  body {
-    zoom: 0.8;
-  }
-}
 
-@media screen and (max-width: 638px) {
+@media (max-width: 576px) {
   body {
-    zoom: 0.6;
+    margin-top: 80px;
+    padding: 0px 2px;
   }
-}
-@media screen and (max-width: 484px) {
-  body {
-    zoom: 0.4;
+  .hidden-xs {
+    display: none;
   }
 }
 

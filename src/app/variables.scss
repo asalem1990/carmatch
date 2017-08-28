@@ -2,3 +2,9 @@ $green  : #3D9970;
 $red    : #FF4136;
 $orange : #FF851B;
 $grey   : #DDDDDD;
+
+$slotHeight: 60px;
+
+@media (max-width: 576px) {
+  $slotHeight: 30px;
+}

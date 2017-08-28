@@ -9,7 +9,11 @@
   height: 59px;
   background: white;
   border-bottom: 1px solid $grey;
-  min-width: 768px;
+
+  @media (max-width: 576px) {
+    padding: 10px 2px;
+  }
+
   .header_title_container {
     clear: both;
     display: inline-block;
@@ -17,10 +21,16 @@
     .header_title {
       font-size: 1.6em;
       float: left;
+      @media (max-width: 576px) {
+        font-size: 1.1em;
+      }
     }
     .navigation_buttons {
       float: right;
       line-height: 1.6em;
+      @media (max-width: 576px) {
+        line-height: 1.1em;
+      }
       button {
         padding: 8px 12px;
         border: 1px solid $grey;
@@ -28,6 +38,9 @@
         background: lighten($grey, 10);
         color: lighten(black, 30);
         cursor: pointer;
+        @media (max-width: 576px) {
+          padding: 2px 8px;
+        }
       }
     }
   }
@@ -38,16 +51,18 @@
       width: 100%;
       th {
         width: 12.5%;
+        @media (max-width: 576px) {
+          font-size: 12px;
+        }
       }
     }
-
   }
 }
 
 table#calendarView {
   width: 100%;
   max-width: 100%;
-  min-width: 768px;
+  //min-width: 768px;
   padding: 20px;
   border-collapse: collapse;
   td{
@@ -55,7 +70,8 @@ table#calendarView {
     padding: 0px 0px;
     width: 12.5%;
     min-width: 12.5%;
-    border-bottom: 1px solid $grey;
+    border-bottom: 1px solid lighten($grey, 5);
+    border-right: 1px solid lighten($grey, 5);
     height: 120px;
     text-align: center;
     vertical-align: top;
@@ -79,6 +95,11 @@ table#calendarView {
       span {
         top: 0px;
       }
+    }
+  }
+  tr:last-child {
+    td {
+      height: 0px;
     }
   }
 }

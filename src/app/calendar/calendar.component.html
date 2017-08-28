@@ -15,7 +15,8 @@
         <tr>
           <th></th>
           <th *ngFor="let day of this.weekDays">
-            {{day | date: 'EE, dd' }}
+            <span class="hidden-xs">{{day | date: 'EE'}}, </span>
+            {{day | date: 'dd' }}
           </th>
         <tr>
       </thead>
@@ -24,14 +25,34 @@
 </div>
 <table id="calendarView" border="0" cellpadding="0" cellmargin="0">
   <tbody *ngIf="data.appointments">
-    <tr *ngFor="let hour of createRange(25)">
+    <tr>
       <td class="slotTitle">
         <span class="slot_time">
-          {{(hour - 1) > 12 ? ( ((hour - 1) - 12) < 10 ? "0" + ((hour - 1) - 12) : (hour - 1) - 12 ) + ":00" + ( (hour - 1) == 24 ? "AM" : "PM" ) : ( (hour - 1 == 0) ? "12" : ((hour - 1) < 10 ? "0" + (hour - 1) : hour - 1) ) + ":00AM"}}
+          12AM
         </span>
       </td>
       <td *ngFor="let day of weekDays">
-        <app-slot *ngIf="data.hasAppointments(day | date:'yyyy-MM-dd', hour - 1) == true" [day]=day [hour]=hour></app-slot>
+        <app-slot *ngIf="data.hasAppointments(day | date:'yyyy-MM-dd', 12) == true" [day]=day [hour]=12></app-slot>
+      </td>
+    </tr>
+    <tr *ngFor="let hour of createRange(23)">
+      <td class="slotTitle">
+        <span class="slot_time">
+
+          {{ hour > 11 ? ( hour == 12 ? hour : hour - 12 ) + "PM" : hour + "AM"}}
+
+
+        </span>
+      </td>
+      <td *ngFor="let day of weekDays">
+        <app-slot *ngIf="data.hasAppointments(day | date:'yyyy-MM-dd', hour) == true" [day]=day [hour]=hour></app-slot>
+      </td>
+    </tr>
+    <tr>
+      <td class="slotTitle">
+        <span class="slot_time">
+          12AM
+        </span>
       </td>
     </tr>
   </tbody>
