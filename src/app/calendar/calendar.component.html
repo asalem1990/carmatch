@@ -23,15 +23,15 @@
   </div>
 </div>
 <table id="calendarView" border="0" cellpadding="0" cellmargin="0">
-  <tbody *ngIf="slot.appointments">
+  <tbody *ngIf="data.appointments">
     <tr *ngFor="let hour of createRange(25)">
       <td class="slotTitle">
         <span class="slot_time">
           {{(hour - 1) > 12 ? ( ((hour - 1) - 12) < 10 ? "0" + ((hour - 1) - 12) : (hour - 1) - 12 ) + ":00" + ( (hour - 1) == 24 ? "AM" : "PM" ) : ( (hour - 1 == 0) ? "12" : ((hour - 1) < 10 ? "0" + (hour - 1) : hour - 1) ) + ":00AM"}}
         </span>
       </td>
-      <td *ngFor="let day of this.weekDays">
-        <app-slot [day]=day [hour]=hour></app-slot>
+      <td *ngFor="let day of weekDays">
+        <app-slot *ngIf="data.hasAppointments(day | date:'yyyy-MM-dd', hour - 1) == true" [day]=day [hour]=hour></app-slot>
       </td>
     </tr>
   </tbody>

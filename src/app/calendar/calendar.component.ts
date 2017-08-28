@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SlotComponent } from '../slot/slot.component'
-
+import { DataService } from '../data.service';
+import { SlotComponent } from '../slot/slot.component';
 
 
 @Component({
@@ -15,13 +15,10 @@ export class CalendarComponent implements OnInit {
   weekDays = [];
 
 
-
-  constructor(public slot: SlotComponent) {
+  constructor(public slot: SlotComponent, protected data: DataService) {
     // GET THE WEEK DAYS FOR BUILDING THE CALENDAT VIEW.
     this.getWeekDays();
   }
-
-
 
   /* GENERIC FUNCTIONS */
   showNextWeek () {

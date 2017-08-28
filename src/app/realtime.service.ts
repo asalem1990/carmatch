@@ -36,6 +36,10 @@ export class RealtimeService {
         }
         case 'SCHEDUALED' : {
           this.schedualedAppointments.push(message.appointment);
+          var index = this.reservedAppointments.indexOf(message.appointment, 0);
+          if (index > -1) {
+             this.reservedAppointments.splice(index, 1);
+          }
           break;
         }
       }
@@ -60,9 +64,11 @@ export class RealtimeService {
   }
 
   // SUBMITTING THE SCHEDUALING FORM AND UPDATE THE VIEW FOR OTHER USERS.
-  schedualAppointment(appointmentID) {
-    let message = {"appointment": appointmentID, "status": "SCHEDUALED"};
+  schedualAppointment() {
+    let message = {"appointment": this.appointmentResevedID, "status": "SCHEDUALED"};
     this.pubnubService.publish({channel: 'carmacth', message: message}, (response) => {});
+    this.isAppointmentReseved = false;
+    this.appointmentResevedID = '';
   }
 
 }

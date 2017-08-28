@@ -1,34 +1,35 @@
-<ul *ngIf="getSlotAvailability(day | date:'yyyy-MM-dd', hour - 1) == true" class="appointments_holder">
-  <li *ngFor="let app of getAppointments(day | date:'yyyy-MM-dd', hour - 1)"id="{{app.id}}">
-    <span *ngIf="app.available == true && !realtime.reservedAppointments.includes(app.id) && !realtime.schedualedAppointments.includes(app.id)"
+<ul class="appointments_holder">
+  <li *ngFor="let appointment of data.getAppointments(day | date:'yyyy-MM-dd', hour - 1)" id="{{appointment.id}}">
+    <span *ngIf="appointment.available == true && !realtime.reservedAppointments.includes(appointment.id) && !realtime.schedualedAppointments.includes(appointment.id)"
           class="available"
-          [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
-          [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
-          [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
-          (click)="realtime.reserveAppointment(app.id)">
+          [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, appointment.id)['height']"
+          [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, appointment.id)['height']"
+          [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, appointment.id)['topOffset']"
+          (click)="realtime.reserveAppointment(appointment.id)">
           Available
     </span>
-    <span *ngIf="app.available == false || realtime.schedualedAppointments.includes(app.id)"
+    <span *ngIf="appointment.available == false || realtime.schedualedAppointments.includes(appointment.id)"
           class="scheduled"
-          [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
-          [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
-          [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
+          [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, appointment.id)['height']"
+          [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, appointment.id)['height']"
+          [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, appointment.id)['topOffset']"
           >Scheduled</span>
-    <span *ngIf="app.available == true && realtime.reservedAppointments.includes(app.id)  && !realtime.schedualedAppointments.includes(app.id)"
+    <span *ngIf="appointment.available == true && realtime.reservedAppointments.includes(appointment.id)  && !realtime.schedualedAppointments.includes(appointment.id)"
           class="reserved"
-          [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
-          [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['height']"
-          [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, app.id)['topOffset']"
+          [style.height.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, appointment.id)['height']"
+          [style.lineHeight.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, appointment.id)['height']"
+          [style.marginTop.px]="getAppointmentPosition(day | date:'yyyy-MM-dd', hour - 1, appointment.id)['topOffset']"
           >Reserved
           </span>
 
-    <div class="new_appointment_container" id="app.id" *ngIf="realtime.isAppointmentReseved == true && realtime.appointmentResevedID == app.id  && !realtime.schedualedAppointments.includes(app.id)">
+    <div class="new_appointment_container" id="appointment.id" *ngIf="realtime.isAppointmentReseved == true && realtime.appointmentResevedID == appointment.id  && !realtime.schedualedAppointments.includes(appointment.id)">
+
       <form [formGroup]="rForm" (ngSubmit)="schedualAppointment(rForm.value)">
-        <span class="close_form" (click)="realtime.unreserveAppointment(app.id)">&#10005;</span>
+        <span class="close_form" (click)="realtime.unreserveAppointment(appointment.id)">&#10005;</span>
         <div class="form-container">
           <div class="row columns">
             <h1>New appointment</h1>
-            <p>{{app.startTime | date: 'short'}} - {{app.endTime | date: 'shortTime'}}</p>
+            <p>{{appointment.startTime | date: 'short'}} - {{appointment.endTime | date: 'shortTime'}}</p>
 
             <label>
               <span class="field_title">Name</span>
@@ -47,7 +48,7 @@
 
             <label>
               <button type="submit" class="btn expanded submitBTN" [disabled]="!rForm.valid">Submit</button>
-              <button type="button" class="btn btn-cancel cancelBTN" (click)="realtime.unreserveAppointment(app.id)">Cancel</button>
+              <button type="button" class="btn btn-cancel cancelBTN" (click)="realtime.unreserveAppointment(appointment.id)">Cancel</button>
             </label>
 
 
